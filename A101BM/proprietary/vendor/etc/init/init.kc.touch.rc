@@ -1,0 +1,48 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2020 KYOCERA Corporation
+
+on boot
+    chown system system /dev/ts_ctrl
+    chmod 0660 /dev/ts_ctrl
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/drv_debug
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/cp_cm
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/get_mu_se_diff
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/manufacturing_test
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/touch_mode
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/glove_mode
+    chown system system /sys/class/kcdisp/kcdisp/easywake_mode
+    chmod 0646 /sys/class/kcdisp/kcdisp/easywake_mode
+    chown system system /sys/class/kcdisp/kcdisp/refresh_disable
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/dut_debug
+    chown system system /sys/kernel/debug/1-0024/mfg_test/fw_self_test
+    chown system system /sys/kernel/debug/1-0024/mfg_test/baseline
+    chown system system sys/bus/i2c/devices/1-0024/command
+    chown system system /sys/bus/i2c/devices/i2c-1/1-0024/kc_ready_status
+    chown system system /sys/bus/i2c/devices/1-0041/kctp_gesture_mode
+    chown system system /sys/bus/i2c/devices/1-0041/kctp_charge_mode
+    chown system system /sys/bus/i2c/devices/1-0041/kctp_event_ctrl
+    chown system system /sys/class/kcdisp/kcdisp/refresh_disable
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_event_ctrl
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_touch_mode
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_glove_mode
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_easywake_mode
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_gsm_mode
+    chown system system /sys/class/ktp/kc_touch/ktp_drv_ctrl
+    chown system system /sys/class/kcdisp/kcdisp/recovery_req
+	chmod 0664 /sys/class/kcdisp/kcdisp/recovery_req
+
+on property:vendor.radio.kc_gsm_state=1
+    write /sys/class/ktp/kc_touch/ktp_drv_gsm_mode 1
+
+on property:vendor.radio.kc_gsm_state=0
+    write /sys/class/ktp/kc_touch/ktp_drv_gsm_mode 0
+
+service ts_daemon /system/vendor/bin/ts_daemon
+    class core
+    group root system
+
+on property:vendor.radio.kc_gsm_state=1
+    write sys/bus/i2c/devices/1-0024/command "04 00 08 00 2F 00 06 30 01 01"
+
+on property:vendor.radio.kc_gsm_state=0
+    write sys/bus/i2c/devices/1-0024/command "04 00 08 00 2F 00 06 30 01 00"

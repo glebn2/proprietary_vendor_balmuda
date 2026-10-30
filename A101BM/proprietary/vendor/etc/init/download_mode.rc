@@ -1,0 +1,5 @@
+on property:vendor.debug.download_mode=1
+    write /sys/module/msm_poweroff/parameters/download_mode 1
+
+on property:vendor.debug.download_mode=0
+    write /sys/module/msm_poweroff/parameters/download_mode 0

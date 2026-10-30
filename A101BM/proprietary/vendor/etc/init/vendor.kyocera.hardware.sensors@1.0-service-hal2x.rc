@@ -1,0 +1,55 @@
+## Must start faster than class-hal(multi-hal_2.x service will be started).
+## This script must be run by the root user.
+on post-fs
+# TapdetectSensor
+    chown system system /dev/tapdetect
+    chmod 0660 /dev/tapdetect
+# CommonProximityLightSensor
+    chown system system /dev/als_sensor
+    chmod 0660 /dev/als_sensor
+# ProximitySensor
+    chown system system /dev/ps_sensor
+    chmod 0660 /dev/ps_sensor
+# sensors_hal(MICON_STATUS)
+    chown system system /dev/sensor_log
+    chmod 0660 /dev/sensor_log
+# SensorMiconFirmware
+    chown system system /sys/module/sensor_micon_driver/parameters/fw_version
+# kcsensors_ext, sensors_ext
+    chown system system /dev/dailys_io_pedom
+    chmod 0660 /dev/dailys_io_pedom
+    chown system system /dev/dailys_io_vehicle
+    chmod 0660 /dev/dailys_io_vehicle
+    chown system system /dev/dailys_io_iwifi
+    chmod 0660 /dev/dailys_io_iwifi
+# VHdetectSensor
+    chown system system /dev/vhdetect_io
+    chmod 0660 /dev/vhdetect_io
+# KCMotionSensor
+    chown system system /dev/kc_motion_sensor_io
+    chmod 0660 /dev/kc_motion_sensor_io
+# gesture_driver
+    chown system system /dev/gs_sensor
+    chmod 0660 /dev/gs_sensor
+# UnderwaterDetectSensor
+    chown system system /dev/underwater_detect
+    chmod 0660 /dev/underwater_detect
+    chown system system /dev/touch_submergence
+    chmod 0660 /dev/touch_submergence
+# Common
+    exec - root root -- /vendor/bin/init.kc.sensor.sh
+
+on post-fs-data
+    mkdir /data/vendor/sensors 0770 system system
+
+## class-hal will be started on-boot.
+## wait the sensors-hal-2-1-multihal
+on property:init.svc.vendor.sensors-hal-2-1-multihal=running
+    start vendor.sensors-hal-1-0
+
+service vendor.sensors-hal-1-0 /vendor/bin/hw/vendor.kyocera.hardware.sensors@1.0-service
+    class hal
+    user system
+    group system input
+    capabilities SYS_NICE
+    disabled

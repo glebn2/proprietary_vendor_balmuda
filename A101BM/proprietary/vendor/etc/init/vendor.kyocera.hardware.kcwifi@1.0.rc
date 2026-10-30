@@ -1,0 +1,4 @@
+service vendor.kcwifi-hal-1-0 /vendor/bin/hw/vendor.kyocera.hardware.kcwifi@1.0-service
+    class hal
+    user wifi
+    group wifi

@@ -1,0 +1,8 @@
+on post-fs
+    # We restorecon /logwork in case the cache partition has been reset.
+    restorecon_recursive /mnt/vendor/logwork
+
+on early-boot
+    chmod 0770 /mnt/vendor/logwork
+    chown root system /mnt/vendor/logwork
+

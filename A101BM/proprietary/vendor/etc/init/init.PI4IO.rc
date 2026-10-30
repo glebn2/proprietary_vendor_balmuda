@@ -1,0 +1,6 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2020 KYOCERA Corporation
+
+on post-fs-data
+    chmod 0660 /dev/pi4io
+    chown nfc nfc /dev/pi4io

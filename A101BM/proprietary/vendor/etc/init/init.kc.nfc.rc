@@ -1,0 +1,20 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2018 KYOCERA Corporation
+# NFC
+on boot
+setprop ro.nfc.port "I2C"
+chmod 0660 /dev/pn553
+chown system nfc /dev/pn553
+chmod 0660 /dev/pn553_2
+chown system nfc /dev/pn553_2
+
+# on post-fs-data
+#     mkdir /data/vendor/nfc 0770 system nfc
+#     mkdir /data/vendor/nfc/factory 0770 system nfc
+#     mkdir /data/vendor/nfc/fwdl 0770 system nfc
+#     mkdir /etc/param
+
+# service kc-nfc-sh /vendor/bin/sh /vendor/bin/init.kc.nfc.sh
+#     class late_start
+#     user root
+#     oneshot

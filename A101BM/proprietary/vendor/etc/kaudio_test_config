@@ -1,0 +1,1399 @@
+######## ######## ######## ######## ######## ######## ######## ######## 
+tc 0
+#dummy
+enable
+disable
+volume
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x01	MainMIC
+#	kc_tx_mainmic_en
+#	kc_tx_mainmic_vol
+#	PATH_TX
+
+tc 1
+!Capture
+Txdevice:11
+
+enable
+test_case:0x8001
+
+disable
+test_case:0x8001
+
+volume
+test_case:0x8001
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x02	EarMIC
+#	kc_tx_earmic_en
+#	kc_tx_earmic_vol
+#	PATH_TX
+
+tc 2
+!Capture
+Txdevice:11
+
+enable
+test_case:0x8002
+
+disable
+test_case:0x8002
+
+volume
+test_case:0x8002
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x03	Receiver
+#	kc_rx_receiver_en
+#	kc_rx_receiver_vol
+#	PATH_RX
+
+tc 3
+!Playback
+Rxdevice:0
+
+enable
+RX_CDC_DMA_RX_0 Audio Mixer MultiMedia1:1
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:AIF1_PB
+RX INT0_1 MIX1 INP0:RX0
+RX INT0 DEM MUX:CLSH_DSM_OUT
+RX_RX0 Digital Volume:84
+EAR_RDAC Switch:1
+RDAC3_MUX:RX1
+EAR PA GAIN:G_6_DB
+RX_EAR Mode:ON
+
+disable
+RX_CDC_DMA_RX_0 Audio Mixer MultiMedia1:0
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:ZERO
+RX INT0_1 MIX1 INP0:ZERO
+RX INT0 DEM MUX:NORMAL_DSM_OUT
+RX_RX0 Digital Volume:0
+EAR_RDAC Switch:0
+RDAC3_MUX:RX1
+EAR PA GAIN:G_6_DB
+RX_EAR Mode:OFF
+
+volume
+RX_RX0 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#//	0x04	Headset
+#	kc_rx_headset_en
+#	kc_rx_headset_vol
+#	PATH_RX
+
+tc 4
+!Playback
+Rxdevice:0
+
+enable
+test_case:0x8004
+
+disable
+test_case:0x8004
+
+volume
+test_case:0x8004
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x05	Speaker(L)
+#	kc_rx_speaker_L_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+
+tc 5
+!Playback
+Rxdevice:33
+
+enable
+test_case:0x8005
+
+disable
+test_case:0x8005
+
+volume
+test_case:0x8005
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x06	1stMIC<=>Receiver
+#	kc_lb_afe_mainmic_receiver_en
+#	kc_rx_receiver_vol
+#	PATH_AFE_LB
+
+tc 6
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800d
+test_case:0x8006
+
+disable
+test_case:0x800d
+test_case:0x8006
+
+volume
+test_case:0x8006
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x07	4thMIC<=>Headset
+#	kc_lb_afe_mainmic_headset_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+
+tc 7
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8001
+test_case:0x8007
+
+disable
+test_case:0x8001
+test_case:0x8007
+
+volume
+test_case:0x8007
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x08	1stMIC<=>Speaker(L)
+#	kc_lb_afe_mainmic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 8
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x800d
+test_case:0x8008
+
+disable
+test_case:0x800d
+test_case:0x8008
+
+volume
+test_case:0x8008
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x09	EarMIC<=>Receiver
+#	kc_lb_afe_earmic_receiver_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 9
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8002
+test_case:0x8006
+
+disable
+test_case:0x8002
+test_case:0x8006
+
+volume
+test_case:0x8006
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x0a	EarMIC<=>Headset
+#	kc_lb_afe_earmic_headset_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+
+tc 0x0a
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8002
+test_case:0x8007
+
+disable
+test_case:0x8002
+test_case:0x8007
+
+volume
+test_case:0x8007
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x0b	EarMIC<=>Speaker(L)
+#	kc_lb_afe_earmic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x0b
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x8002
+test_case:0x8008
+
+disable
+test_case:0x8002
+test_case:0x8008
+
+volume
+test_case:0x8008
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x0c	4thMIC<=>Receiver
+#	kc_lb_afe_submic_receiver_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x0c
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8001
+test_case:0x8006
+
+disable
+test_case:0x8001
+test_case:0x8006
+
+volume
+test_case:0x8006
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{// 0x0d	3rdMIC<=>Headset */
+#	kc_lb_afe_submic_headset_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+
+tc 0x0d
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800c
+test_case:0x8007
+
+disable
+test_case:0x800c
+test_case:0x8007
+
+volume
+test_case:0x8007
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{// 0x0e	2ndMIC<=>Receiver
+#	kc_lb_afe_submic_receiver_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x0e
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800e
+test_case:0x8006
+
+disable
+test_case:0x800e
+test_case:0x8006
+
+volume
+test_case:0x8006
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{// 0x0f    2ndMIC<=>Speaker(L)
+#    kc_lb_afe_submic_speaker_en,
+#    kc_rx_seaker_vol,
+#    PATH_AFE_LB,
+
+tc 0x0f
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x800e
+test_case:0x8008
+
+disable
+test_case:0x800e
+test_case:0x8008
+
+volume
+test_case:0x8008
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x10	MainMIC<=>HAC */
+#	kc_lb_afe_mainmic_hac_en,
+#	kc_rx_hac_vol,
+#	PATH_AFE_LB,
+
+tc 0x10
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8001
+test_case:0x8010
+
+disable
+test_case:0x8001
+test_case:0x8010
+
+volume
+test_case:0x8001
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x11	3rdMIC<=>Receiver */
+#	kc_lb_afe_submic_receiver_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x0011
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800c
+test_case:0x8006
+
+disable
+test_case:0x800c
+test_case:0x8006
+
+volume
+test_case:0x8006
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x12	4thMIC<=>Speaker(L)
+#	kc_lb_afe_submic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x0012
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x8001
+test_case:0x8008
+
+disable
+test_case:0x8001
+test_case:0x8008
+
+volume
+test_case:0x8008
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x13	3rdMIC<=>Speaker */
+#	kc_lb_afe_submic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x0013
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800c
+test_case:0x8008
+
+disable
+test_case:0x800c
+test_case:0x8008
+
+volume
+test_case:0x8008
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x14	SubMIC<=>HAC */
+#	kc_lb_afe_submic_hac_en
+#	kc_rx_hac_vol
+#	PATH_AFE_LB,
+#	50
+#},
+
+tc 0x0014
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800c
+test_case:0x8010
+
+disable
+test_case:0x800c
+test_case:0x8010
+
+volume
+test_case:0x8010
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x15	EarMIC<=>HAC
+#	kc_lb_afe_earmic_hac_en
+#	kc_rx_hac_vol
+#	PATH_AFE_LB
+
+tc 0x0015
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x8002
+test_case:0x8010
+
+disable
+test_case:0x8002
+test_case:0x8010
+
+volume
+test_case:0x8010
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x16	HAC */
+#	kc_rx_hac_en,
+#	kc_rx_hac_vol,
+#	PATH_RX,
+
+tc 0x0016
+!Playback
+Rxdevice:0
+
+enable
+test_case:0x8016
+
+disable
+test_case:0x8016
+
+volume
+test_case:0x8016
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#//	0x17	HP capture */
+#	kc_tx_hp_test_en
+#	kc_rx_headset_vol
+
+tc 0x0017
+!Playback
+Rxdevice:0
+
+enable
+test_case:0x8004
+MultiMedia1 Mixer TERT_MI2S_TX:1
+test_case:0x8002
+
+disable
+test_case:0x8004
+MultiMedia1 Mixer TERT_MI2S_TX:0
+test_case:0x8002
+
+volume
+test_case:0x8004
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#//	0x18	SubMIC<=>Headset Speaker
+#	kc_lb_iir_submic_headset_and_rx_speaker_en
+#	kc_rx_seaker_vol
+
+tc 0x0018
+!Playback
+Rxdevice:0
+
+enable
+LOOPBACK Mode:ENABLE
+IIR1 INP1 MUX:DEC1
+DEC1 MUX:ADC2
+ADC2 MUX:INP3
+ADC3 Volume:100
+DEC1 Volume:68
+IIR1 INP1 Volume:68
+RX1 MIX1 INP1:IIR1
+HPHL:Switch
+RX1 Digital Volume:68
+test_case:0x8005
+
+disable
+LOOPBACK Mode:DISABLE
+IIR1 INP1 MUX:ZERO
+DEC1 MUX:ZERO
+ADC2 MUX:ZERO
+ADC3 Volume:0
+DEC1 Volume:0
+IIR1 INP1 Volume:0
+RX1 MIX1 INP1:ZERO
+HPHL:ZERO
+RX1 Digital Volume:0
+test_case:0x8005
+
+volume
+test_case:0x8005
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+tc 0x0019
+#HeadSet Mic to Speakers loopback
+#main Mic to headphone
+!CodecLoop
+
+enable
+LOOPBACK Mode:ENABLE
+DEC2 MUX:ADC2
+ADC2 MUX:INP2
+IIR2 INP1 MUX:DEC2
+RX3 MIX1 INP1:IIR2
+RX3 Digital Volume:67
+SPK:Switch
+DEC1 MUX:ADC1
+ADC1 Volume:80
+IIR1 INP1 MUX:DEC1
+RX1 MIX1 INP1:IIR1
+RX1 Digital Volume:67
+RX2 MIX1 INP1:IIR1
+RX2 Digital Volume:67
+RDAC2 MUX:RX2
+HPHL:Switch
+HPHR:Switch
+DEC1 Volume:68
+Loopback MCLK:ENABLE
+IIR2 INP1 Volume:60
+IIR1 INP1 Volume:60
+
+disable
+DEC2 MUX:ZERO
+ADC2 MUX:ZERO
+IIR2 INP1 MUX:ZERO
+RX3 MIX1 INP1:ZERO
+RX3 Digital Volume:0
+SPK:ZERO
+DEC1 MUX:ZERO
+ADC1 Volume:0
+IIR1 INP1 MUX:ZERO
+RX1 MIX1 INP1:ZERO
+RX1 Digital Volume:0
+RX2 MIX1 INP1:ZERO
+RX2 Digital Volume:0
+RDAC2 MUX:ZERO
+HPHL:ZERO
+HPHR:ZERO
+DEC1 Volume:0
+IIR2 INP1 Volume:0
+IIR1 INP1 Volume:0
+Loopback MCLK:DISABLE
+LOOPBACK Mode:DISABLE
+
+volume
+RX3 Digital Volume:0
+RX1 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x1a	1stMIC<=>Headset
+#	kc_lb_afe_mainmic_headset_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+
+tc 0x001a
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800d
+test_case:0x8007
+
+disable
+test_case:0x800d
+test_case:0x8007
+
+volume
+test_case:0x8007
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x1b	2ndMIC<=>Headset
+#	kc_lb_afe_mainmic_headset_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+
+tc 0x001b
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+test_case:0x800e
+test_case:0x8007
+
+disable
+test_case:0x800e
+test_case:0x8007
+
+volume
+test_case:0x8007
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x1c	Speaker(R)
+#	kc_rx_speaker_R_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+
+tc 0x001c
+!Playback
+Rxdevice:33
+
+enable
+test_case:0x800a
+
+disable
+test_case:0x800a
+
+volume
+test_case:0x800a
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x1d	4thMIC<=>Speaker(R)
+#	kc_lb_afe_mainmic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x1d
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x8001
+test_case:0x8009
+
+disable
+test_case:0x8001
+test_case:0x8009
+
+volume
+test_case:0x8009
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x1e	EarMIC<=>Speaker(R)
+#	kc_lb_afe_earmic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x1e
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x8002
+test_case:0x8009
+
+disable
+test_case:0x8002
+test_case:0x8009
+
+volume
+test_case:0x8009
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#{/* 0x1f	3rdMIC<=>Speaker(R) */
+#	kc_lb_afe_submic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x001f
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x800c
+test_case:0x8009
+
+disable
+test_case:0x800c
+test_case:0x8009
+
+volume
+test_case:0x8009
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x20	Speaker(Music)
+#	kc_rx_speaker_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+
+tc 0x0020
+!Playback
+Rxdevice:33
+
+enable
+test_case:0x800b
+
+disable
+test_case:0x800b
+
+volume
+test_case:0x800b
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x21	Speaker(LR)
+#	kc_rx_speaker_LR_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+
+tc 0x0021
+!Playback
+Rxdevice:33
+
+enable
+test_case:0x800f
+
+disable
+test_case:0x800f
+
+volume
+test_case:0x800f
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x22	EarMIC<=>Speaker(LR)
+#	kc_lb_afe_earmic_speaker_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x22
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+test_case:0x8002
+test_case:0x8017
+
+disable
+test_case:0x8002
+test_case:0x8017
+
+volume
+test_case:0x8017
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8001	DMIC0(4thMIC)
+#	kc_tx_mainmic_en
+#	kc_tx_mainmic_vol
+#	PATH_TX
+tc 0x8001
+!Capture
+Txdevice:31
+
+enable
+TX_CDC_DMA_TX_3 Channels:One
+TX_AIF1_CAP Mixer DEC2:1
+TX DMIC MUX2:DMIC0
+TX_DEC2 Volume:76
+
+disable
+TX_CDC_DMA_TX_3 Channels:One
+TX_AIF1_CAP Mixer DEC2:0
+TX DMIC MUX2:ZERO
+TX_DEC2 Volume:0
+
+volume
+TX_DEC2 Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8002	EarMIC
+#	kc_tx_earmic_en
+#	kc_tx_earmic_vol
+#	PATH_TX
+tc 0x8002
+!Capture
+Txdevice:31
+
+enable
+TX DEC0 MUX:SWR_MIC
+TX SMIC MUX0:ADC1
+TX_CDC_DMA_TX_3 Channels:One
+TX_AIF1_CAP Mixer DEC0:1
+DEC0_BCS Switch:1
+ADC2_MIXER Switch:1
+ADC2 MUX:INP2
+TX_DEC0 Volume:68
+
+disable
+TX DEC0 MUX:MSM_DMIC
+TX SMIC MUX0:ZERO
+TX_CDC_DMA_TX_3 Channels:Two
+TX_AIF1_CAP Mixer DEC0:0
+DEC0_BCS Switch:0
+ADC2_MIXER Switch:0
+ADC2 MUX:INP2
+TX_DEC0 Volume:0
+
+volume
+TX_DEC0 Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#//	0x8004	Headset
+#	kc_rx_headset_en
+#	kc_rx_headset_vol
+#	PATH_RX
+tc 0x8004
+#Head Phone Stereo to Mono
+!Playback
+Rxdevice:0
+
+enable
+RX_CDC_DMA_RX_0 Audio Mixer MultiMedia1:1
+RX_CDC_DMA_RX_0 Channels:Two
+RX_MACRO RX0 MUX:AIF1_PB
+RX_MACRO RX1 MUX:AIF1_PB
+RX INT0_1 MIX1 INP0:RX0
+RX INT1_1 MIX1 INP0:RX1
+RX INT0 DEM MUX:CLSH_DSM_OUT
+RX INT1 DEM MUX:CLSH_DSM_OUT
+RX_COMP1 Switch:1
+RX_COMP2 Switch:1
+HPHL_COMP Switch:1
+HPHR_COMP Switch:1
+HPHL_RDAC Switch:1
+HPHR_RDAC Switch:1
+RX_RX0 Digital Volume:67
+RX_RX1 Digital Volume:67
+
+disable
+RX_CDC_DMA_RX_0 Audio Mixer MultiMedia1:0
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:ZERO
+RX_MACRO RX1 MUX:ZERO
+RX INT0_1 MIX1 INP0:ZERO
+RX INT1_1 MIX1 INP0:ZERO
+RX INT0 DEM MUX:NORMAL_DSM_OUT
+RX INT1 DEM MUX:NORMAL_DSM_OUT
+RX_COMP1 Switch:0
+RX_COMP2 Switch:0
+HPHL_COMP Switch:0
+HPHR_COMP Switch:0
+HPHL_RDAC Switch:0
+HPHR_RDAC Switch:0
+RX_RX0 Digital Volume:0
+RX_RX1 Digital Volume:0
+
+volume
+RX_RX0 Digital Volume:0
+RX_RX1 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8005	Speaker(L)
+#	kc_rx_speaker_L_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+tc 0x8005
+#Speaker Device
+!Playback
+Rxdevice:5
+
+enable
+SEC_MI2S_RX Audio Mixer MultiMedia1:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Audio Mixer MultiMedia1:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#XXXX<=>Receiver
+#	kc_rx_receiver_afe_lb_en
+#	kc_rx_receiver_vol
+tc 0x8006
+#XXXX<=>Receiver
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+RX_CDC_DMA_RX_0 Port Mixer TX_CDC_DMA_TX_3:1
+RX_CDC_DMA_RX_0_DL_HL Switch:1
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:AIF1_PB
+RX INT0_1 MIX1 INP0:RX0
+RX INT0 DEM MUX:CLSH_DSM_OUT
+RX_RX0 Digital Volume:67
+EAR_RDAC Switch:1
+RDAC3_MUX:RX1
+EAR PA GAIN:G_6_DB
+RX_EAR Mode:ON
+
+disable
+RX_CDC_DMA_RX_0 Port Mixer TX_CDC_DMA_TX_3:0
+RX_CDC_DMA_RX_0_DL_HL Switch:0
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:ZERO
+RX INT0_1 MIX1 INP0:ZERO
+RX INT0 DEM MUX:NORMAL_DSM_OUT
+RX_RX0 Digital Volume:0
+EAR_RDAC Switch:0
+RDAC3_MUX:RX1
+EAR PA GAIN:G_6_DB
+RX_EAR Mode:OFF
+
+volume
+RX_RX0 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8007	XXXX<=>Headset
+#	kc_rx_headset_afe_lb_en,
+#	kc_rx_headset_vol,
+#	PATH_AFE_LB,
+tc 0x8007
+#MainMIC<=>Headset
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+RX_CDC_DMA_RX_0 Port Mixer TX_CDC_DMA_TX_3:1
+RX_CDC_DMA_RX_0_DL_HL Switch:1
+RX_CDC_DMA_RX_0 Channels:Two
+RX_MACRO RX0 MUX:AIF1_PB
+RX_MACRO RX1 MUX:AIF1_PB
+RX INT0_1 MIX1 INP0:RX0
+RX INT1_1 MIX1 INP0:RX1
+RX INT0 DEM MUX:CLSH_DSM_OUT
+RX INT1 DEM MUX:CLSH_DSM_OUT
+RX_COMP1 Switch:1
+RX_COMP2 Switch:1
+HPHL_COMP Switch:1
+HPHR_COMP Switch:1
+HPHL_RDAC Switch:1
+HPHR_RDAC Switch:1
+RX_RX0 Digital Volume:67
+RX_RX1 Digital Volume:67
+
+disable
+RX_CDC_DMA_RX_0 Port Mixer TX_CDC_DMA_TX_3:0
+RX_CDC_DMA_RX_0_DL_HL Switch:0
+RX_CDC_DMA_RX_0 Channels:One
+RX_MACRO RX0 MUX:ZERO
+RX_MACRO RX1 MUX:ZERO
+RX INT0_1 MIX1 INP0:ZERO
+RX INT1_1 MIX1 INP0:ZERO
+RX INT0 DEM MUX:NORMAL_DSM_OUT
+RX INT1 DEM MUX:NORMAL_DSM_OUT
+RX_COMP1 Switch:0
+RX_COMP2 Switch:0
+HPHL_COMP Switch:0
+HPHR_COMP Switch:0
+HPHL_RDAC Switch:0
+HPHR_RDAC Switch:0
+RX_RX0 Digital Volume:0
+RX_RX1 Digital Volume:0
+
+volume
+RX_RX0 Digital Volume:0
+RX_RX1 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8008	XXXX<=>Speaker(L)
+#	kc_rx_speaker_afe_lb_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x8008
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:1
+SEC_MI2S_RX_DL_HL Switch:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:0
+SEC_MI2S_RX_DL_HL Switch:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8009	XXXX<=>Speaker(R)
+#	kc_rx_speaker_afe_lb_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x8009
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:1
+SEC_MI2S_RX_DL_HL Switch:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:0
+SEC_MI2S_RX_DL_HL Switch:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800a	Speaker(R)
+#	kc_rx_speaker_R_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+tc 0x800a
+#Speaker Device
+!Playback
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Audio Mixer MultiMedia1:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Audio Mixer MultiMedia1:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800b	Speaker(Music)
+#	kc_rx_speaker_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+tc 0x800b
+#Speaker Device
+!Playback
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Audio Mixer MultiMedia1:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Music
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Audio Mixer MultiMedia1:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800c	DMIC3(3rdMIC)
+#	kc_tx_submic_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x800c
+!Capture
+Txdevice:31
+
+enable
+TX_CDC_DMA_TX_3 Channels:One
+TX_AIF1_CAP Mixer DEC2:1
+TX DMIC MUX2:DMIC3
+TX_DEC2 Volume:76
+
+disable
+TX_CDC_DMA_TX_3 Channels:One
+TX_AIF1_CAP Mixer DEC2:0
+TX DMIC MUX2:ZERO
+TX_DEC2 Volume:0
+
+volume
+TX_DEC2 Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800d	AMIC1(1stMIC)
+#	kc_tx_submic_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x800d
+!Capture
+Txdevice:31
+
+enable
+TX_CDC_DMA_TX_3 Channels:One
+TX DEC1 MUX:SWR_MIC
+TX SMIC MUX1:ADC0
+TX_AIF1_CAP Mixer DEC1:1
+ADC1_MIXER Switch:1
+TX_DEC1 Volume:68
+
+disable
+TX_CDC_DMA_TX_3 Channels:One
+TX DEC1 MUX:ZERO
+TX SMIC MUX1:ZERO
+TX_AIF1_CAP Mixer DEC1:0
+ADC1_MIXER Switch:0
+TX_DEC1 Volume:0
+
+volume
+TX_DEC1 Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800e	AMIC3(2ndMIC)
+#	kc_tx_submic_en,
+#	kc_rx_receiver_vol,
+#	PATH_AFE_LB,
+
+tc 0x800e
+!Capture
+Txdevice:31
+
+enable
+TX_CDC_DMA_TX_3 Channels:One
+TX DEC2 MUX:SWR_MIC
+TX SMIC MUX2:ADC1
+TX_AIF1_CAP Mixer DEC2:1
+ADC2_MIXER Switch:1
+ADC2 MUX:INP3
+TX_DEC2 Volume:68
+
+disable
+TX_CDC_DMA_TX_3 Channels:One
+TX DEC2 MUX:ZERO
+TX SMIC MUX2:ZERO
+TX_AIF1_CAP Mixer DEC2:0
+ADC2_MIXER Switch:0
+ADC2 MUX:0
+TX_DEC2 Volume:0
+
+volume
+TX_DEC2 Volume:0
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x800f	Speaker(LR)
+#	kc_rx_speaker_LR_en
+#	kc_rx_seaker_vol
+#	PATH_RX
+tc 0x800f
+#Speaker Device
+!Playback
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Audio Mixer MultiMedia1:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Audio Mixer MultiMedia1:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8010	XXXX<=>HAC
+#	kc_rx_hac_afe_lb_en,
+#	kc_rx_hac_vol,
+#	PATH_AFE_LB,
+
+tc 0x8010
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+SLIM RX1 MUX:AIF1_PB
+SLIM_0_RX Channels:One
+RX1 MIX1 INP1:RX1
+CLASS_H_DSM MUX:RX_HPHL
+EAR PA Gain:POS_0_DB
+RX1 Digital Volume:67
+DAC1 Switch:1
+SLIMBUS_DL_HL Switch:1
+SLIMBUS_0_RX Port Mixer SLIM_0_TX:1
+
+disable
+SLIM RX1 MUX:ZERO
+RX1 MIX1 INP1:ZERO
+CLASS_H_DSM MUX:ZERO
+RX1 Digital Volume:0
+DAC1 Switch:0
+SLIMBUS_DL_HL Switch:0
+SLIMBUS_0_RX Port Mixer SLIM_0_TX:0
+
+volume
+RX1 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8016	XXXX<=>HAC
+#	kc_rx_hac_en
+#	kc_rx_hac_vol
+#	PATH_AFE_LB,
+
+tc 0x8016
+!AfeLoop
+Txdevice:31
+Rxdevice:30
+
+enable
+SLIMBUS_0_RX Audio Mixer MultiMedia1:1
+SLIM RX1 MUX:AIF1_PB
+SLIM_0_RX Channels:One
+RX1 MIX1 INP1:RX1
+CLASS_H_DSM MUX:RX_HPHL
+EAR PA Gain:POS_0_DB
+RX1 Digital Volume:67
+DAC1 Switch:1
+
+disable
+SLIMBUS_0_RX Audio Mixer MultiMedia1:1
+SLIM RX1 MUX:ZERO
+RX1 MIX1 INP1:ZERO
+CLASS_H_DSM MUX:ZERO
+RX1 Digital Volume:0
+DAC1 Switch:1
+
+volume
+RX1 Digital Volume:0
+
+
+######## ######## ######## ######## ######## ######## ######## ######## 
+#// 0x8017	XXXX<=>Speaker(LR)
+#	kc_rx_speaker_afe_lb_en,
+#	kc_rx_seaker_vol,
+#	PATH_AFE_LB,
+
+tc 0x8017
+!AfeLoop
+Txdevice:31
+Rxdevice:33
+
+enable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:1
+SEC_MI2S_RX_DL_HL Switch:1
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:SPK_inspection
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:default
+
+disable
+SEC_MI2S_RX Port Mixer TX_CDC_DMA_TX_3:0
+SEC_MI2S_RX_DL_HL Switch:0
+SEC_MI2S_RX Channels:One
+TORQUEG Profile:Powerdown
+TAS2563 Program:0
+TAS2563 Configuration:0
+TAS2563 VBoost Ctrl:init
+
+volume
+RX_RX2 Digital Volume:0

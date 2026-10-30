@@ -1,0 +1,49 @@
+#This software is contributed or developed by KYOCERA Corporation.
+# (C) 2021 KYOCERA Corporation
+
+on boot
+    chown root system /sys/class/power_supply/battery/oem_input_suspend
+    chown root system /sys/class/power_supply/bms/oem_batt_chg_enabled
+    chmod 0664 /sys/class/power_supply/battery/oem_input_suspend
+    chmod 0664 /sys/class/power_supply/bms/oem_batt_chg_enabled
+    start chg_dnand
+
+on property:ro.vendor.mode.kccharger=1
+    setprop sys.usb.config mass_storage
+    setprop debug.sf.nobootanimation 1
+    start qcom-post-boot
+    start charger
+    start offchg_monitor
+    start chg_dnand
+
+on property:persist.vendor.chgdisabled=1
+    write /sys/class/power_supply/battery/oem_input_suspend 1
+
+on property:persist.vendor.chgdisabled=0
+    write /sys/class/power_supply/battery/oem_input_suspend 0
+
+on property:persist.vendor.batt_care.mode=*
+    write /sys/class/power_supply/bms/battery_care_mode ${persist.vendor.batt_care.mode}
+
+on property:persist.vendor.batt_care.notify=*
+    write /sys/class/power_supply/bms/battery_care_notification ${persist.vendor.batt_care.notify}
+
+on property:persist.vendor.auto_on.enable=*
+    write /sys/class/power_supply/battery/oem_auto_on_enable ${persist.vendor.auto_on.enable}
+
+on property:persist.vendor.offchg_led.disable=*
+    write /sys/class/power_supply/battery/oem_led_disable ${persist.vendor.offchg_led.disable}
+
+service offchg_monitor /vendor/bin/offchg_monitor
+    class late_start
+    user system
+    group system
+    disabled
+    oneshot
+
+service chg_dnand /vendor/bin/chg_dnand
+    class late_start
+    user root
+    group root
+    disabled
+    oneshot

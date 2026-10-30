@@ -1,0 +1,38 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2018 KYOCERA Corporation
+
+on boot
+    chown system system /sys/class/leds/mobilelightinfo/brightness
+    chown system system /sys/class/leds/ledinfo/brightness
+    chown system system /sys/class/leds/red/control_ex
+    chown system system /sys/class/leds/green/control_ex
+    chown system system /sys/class/leds/amber/control_ex
+    chown system system /dev/leds-ledlight
+    chmod 0660 /dev/leds-ledlight
+
+	chown system system /sys/class/backlight/backlight/brightness
+	chown system system /sys/class/leds/led:torch_0/brightness
+	chown system system /sys/class/leds/led:torch_1/brightness
+	chown system system /sys/class/leds/led:switch_0/brightness
+	chown system system /sys/class/leds/led:switch_1/brightness
+    chmod 664 /sys/class/backlight/backlight/brightness
+    chmod 664 /sys/class/backlight/backlight/max_brightness
+
+    chown root root /sys/class/backlight/panel0-backlight/max_brightness
+    chmod 664 /sys/class/backlight/panel0-backlight/max_brightness
+    chmod 664 /sys/class/backlight/panel0-backlight/brightness
+
+    chown system system /dev/kcled
+    chmod 0660 /dev/kcled
+
+    chown system system /sys/class/leds/aled1/control
+    chown system system /sys/class/leds/aled2/control
+    chown system system /sys/class/leds/aled3/control
+    chmod 664 /sys/class/leds/aled1/control
+    chmod 664 /sys/class/leds/aled2/control
+    chmod 664 /sys/class/leds/aled3/control
+
+service kclight_proc /system/vendor/bin/kclight_proc
+    class core
+    group root system
+#    oneshot

@@ -1,0 +1,8 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2019 KYOCERA Corporation
+
+service akscd /vendor/bin/akscd
+    class core
+    user root
+    group root
+

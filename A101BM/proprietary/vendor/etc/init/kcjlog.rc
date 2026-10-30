@@ -1,0 +1,12 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2018 KYOCERA Corporation
+#
+
+on property:ro.build.date=*
+    write /sys/module/kcjlog/parameters/build_date ${ro.build.date}
+
+on property:ro.build.version.incremental=*
+    write /sys/module/kcjlog/parameters/build_swversion ${ro.build.version.incremental}
+
+on property:ro.product.model=*
+    write /sys/module/kcjlog/parameters/product_model ${ro.product.model}

@@ -1,0 +1,10 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2022 KYOCERA Corporation
+
+on boot
+    chown system system /sys/class/timed_output/vibrator/amplitude
+    chmod 0660 /sys/class/timed_output/vibrator/amplitude
+    chown system system /sys/class/timed_output/vibrator/voltage
+    chmod 0660 /sys/class/timed_output/vibrator/voltage
+    chown system system /sys/class/timed_output/vibrator/autocal
+    chmod 0660 /sys/class/timed_output/vibrator/autocal

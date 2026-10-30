@@ -1,0 +1,17 @@
+# This software is contributed or developed by KYOCERA Corporation.
+# (C) 2018 KYOCERA Corporation
+#
+
+service initwork /system/vendor/bin/initwork
+    class late_start
+    user root
+    group root system shell log sdcard_r sdcard_rw media_rw
+
+service initbrz /system/bin/dumpstate  -S -z -d \
+        -o /data/user_de/0/com.android.shell/files/bugreports
+    socket dumpstate stream 0660 shell log
+    class late_start
+    user root
+    group root system shell log sdcard_r sdcard_rw media_rw
+    disabled
+    oneshot

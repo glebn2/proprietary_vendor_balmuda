@@ -1,0 +1,87 @@
+#This software is contributed or developed by KYOCERA Corporation.
+#(C) 2020 KYOCERA Corporation
+
+service thermaladjNORMAL /vendor/bin/kc_thermal_dynamic_adj NORMAL
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladjONCALL /vendor/bin/kc_thermal_dynamic_adj ONCALL
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladjCAMPRE /vendor/bin/kc_thermal_dynamic_adj CAMPRE
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladjCAMREC /vendor/bin/kc_thermal_dynamic_adj CAMREC
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladj3RDCAM /vendor/bin/kc_thermal_dynamic_adj 3RDCAM
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladj4KRECO /vendor/bin/kc_thermal_dynamic_adj 4KRECO
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+
+service thermaladjLCDBLT /vendor/bin/kc_thermal_dynamic_adj LCDBLT
+       class core
+       oneshot
+       disabled
+       user system
+       group system
+# normal
+on property:vendor.radio.kc_voice_call_state=0 && property:vendor.camera.camerasvr.started=0 && property:vendor.sys.backlight=0
+       start thermaladjNORMAL
+
+# oncall
+on property:vendor.radio.kc_voice_call_state=1 && property:vendor.camera.camerasvr.started=0 && property:sys.boot_completed=1
+       start thermaladjONCALL
+
+# camera preview
+on property:vendor.camera.camerasvr.started=1 && property:sys.boot_completed=1
+       start thermaladjCAMPRE
+
+on property:vendor.camera.camerasvr.started=17 && property:sys.boot_completed=1
+       start thermaladjCAMPRE
+
+# camera recording
+on property:vendor.camera.camerasvr.started=2 && property:sys.boot_completed=1
+       start thermaladjCAMREC
+
+on property:vendor.camera.camerasvr.started=18 && property:sys.boot_completed=1
+       start thermaladjCAMREC
+
+# 3rd Party camera
+on property:vendor.camera.camerasvr.started=4097 && property:sys.boot_completed=1
+       start thermaladj3RDCAM
+
+on property:vendor.camera.camerasvr.started=4113 && property:sys.boot_completed=1
+       start thermaladj3RDCAM
+
+# 4k recording
+on property:vendor.camera.camerasvr.started=3 && property:sys.boot_completed=1
+       start thermaladj4KRECO
+
+# lcd backlight on
+on property:vendor.radio.kc_voice_call_state=0 && property:vendor.camera.camerasvr.started=0 && property:vendor.sys.backlight=1
+       start thermaladjLCDBLT
